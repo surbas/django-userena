@@ -18,7 +18,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'demo_project.db',
+        'NAME': 'demo_project2.db',
         'TEST_NAME': ':memory:',
     }
 }
@@ -113,6 +113,7 @@ AUTH_PROFILE_MODULE = 'profiles.Profile'
 
 USERENA_DISABLE_PROFILE_LIST = True
 USERENA_MUGSHOT_SIZE = 140
+USERENA_MODERATE_SIGNUP = True
 
 # Test settings
 TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'

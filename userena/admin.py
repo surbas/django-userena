@@ -12,14 +12,12 @@ def accept_signup(modeladmin, request, queryset):
     for obj in queryset:
         key = obj.userena_signup.activation_key
         
-        # only if its not already activated
-        if key == userena_settings.USERENA_ACTIVATED:
-            continue
-        obj.userena_signup.activation_key = userena_settings.USERENA_ACTIVATED
-        obj.userena_signup.send_approval_email()
-        obj.is_active = True
-        obj.userena_signup.save()
-        obj.save()
+        if key == userena_settings.USERENA_PENDING_MODERATION:
+            obj.userena_signup.activation_key = userena_settings.USERENA_ACTIVATED
+            obj.userena_signup.send_approval_email()
+            obj.is_active = True
+            obj.userena_signup.save()
+            obj.save()
         
 accept_signup.short_description = _("Accept/Enable a users signup.")
 
@@ -28,13 +26,12 @@ def reject_signup(modeladmin, request, queryset):
         key = obj.userena_signup.activation_key
         
         # only if its not already rejected
-        if key == userena_settings.USERENA_ACTIVATION_REJECTED:
-            continue
-        obj.userena_signup.activation_key = userena_settings.USERENA_ACTIVATION_REJECTED
-        obj.userena_signup.send_rejection_email()
-        obj.is_active = False
-        obj.userena_signup.save()
-        obj.save()
+        if key == userena_settings.USERENA_PENDING_MODERATION:
+            obj.userena_signup.activation_key = userena_settings.USERENA_ACTIVATION_REJECTED
+            obj.userena_signup.send_rejection_email()
+            obj.is_active = False
+            obj.userena_signup.save()
+            obj.save()
             
 reject_signup.short_description = _("Reject/Disable a users signup.")
 
